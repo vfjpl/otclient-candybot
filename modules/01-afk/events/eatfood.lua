@@ -32,6 +32,6 @@ function AutoEat.Event(event)
     return Helper.safeDelay(3000, 7000)
   else
     Helper.safeUseInventoryItem(food)
-    return Helper.safeDelay(6000, 12000)
+    return Helper.safeDelay(60000, 120000)
   end
 end
