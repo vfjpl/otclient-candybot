@@ -69,14 +69,14 @@ function init()
   BotLogger.init()
 
   -- hook functions
-  connect(g_game, { 
+  connect(g_game, {
     onGameStart = CandyBot.online,
     onGameEnd = CandyBot.offline
   })
 
   -- get bot settings
   CandyBot.options = g_settings.getNode('Bot') or {}
-  
+
   if g_game.isOnline() then
     CandyBot.online()
   end
@@ -184,7 +184,7 @@ function CandyBot.changeOption(key, state, loading)
   if state == nil then
     return
   end
-  
+
   if CandyBot.defaultOptions[key] == nil then
     CandyBot.options[key] = nil
     return
@@ -199,7 +199,7 @@ function CandyBot.changeOption(key, state, loading)
         widget = p:recursiveGetChildById(key)
         if widget then break end
       end
-      if not widget then 
+      if not widget then
         widget = panel:recursiveGetChildById(key)
         if not widget then
           BotLogger.warning("CandyBot: no widget found with name '"..key.."'")
@@ -235,7 +235,7 @@ function CandyBot.changeOption(key, state, loading)
     end
 
     CandyBot.options[char][key] = state
-    
+
     -- Update the settings
     g_settings.setNode('Bot', CandyBot.options)
   end
