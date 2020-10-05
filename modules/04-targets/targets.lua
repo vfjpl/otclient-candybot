@@ -41,7 +41,7 @@ function TargetsModule.init()
   local newItem = g_ui.createWidget('ListRow', UI.TargetList)
   newItem:setText("<New Monster>")
   newItem:setId("new")
-  
+
   TargetsModule.bindHandlers()
 
   TargetsModule.parentUI = CandyBot.window
@@ -170,7 +170,7 @@ function TargetsModule.bindHandlers()
   connect(UI.LoadList, {
     onChildFocusChange = function(self, focusedChild, unfocusedChild, reason)
         if reason == ActiveFocusReason then return end
-        if focusedChild == nil then 
+        if focusedChild == nil then
           UI.LoadButton:setEnabled(false)
           loadListIndex = nil
         else
@@ -214,7 +214,7 @@ function TargetsModule.bindHandlers()
     end
   })
 
-  connect(UI.StanceRadioGroup, { 
+  connect(UI.StanceRadioGroup, {
     onSelectionChange = function(self, selectedButton)
       if selectedButton == nil then return end
       local buttonId = selectedButton:getId()
@@ -230,15 +230,15 @@ function TargetsModule.bindHandlers()
       if currentSetting then
         currentSetting:setStance(stanceMode)
       end
-    end 
+    end
   })
 
-  g_keyboard.bindKeyPress('Up', function() 
-      UI.TargetList:focusPreviousChild(KeyboardFocusReason) 
+  g_keyboard.bindKeyPress('Up', function()
+      UI.TargetList:focusPreviousChild(KeyboardFocusReason)
     end, UI.TargetsPanel)
 
-  g_keyboard.bindKeyPress('Down', function() 
-      UI.TargetList:focusNextChild(KeyboardFocusReason) 
+  g_keyboard.bindKeyPress('Down', function()
+      UI.TargetList:focusNextChild(KeyboardFocusReason)
     end, UI.TargetsPanel)
 end
 
@@ -383,7 +383,7 @@ function TargetsModule.connectSetting(target, setting)
   connect(setting, {
     onRangeChange = function(setting, range, oldRange, index)
       local target = setting:getTarget()
-      BotLogger.debug("["..target:getName().."]["..setting:getIndex().."] Range"..(index and "["..index.."]" 
+      BotLogger.debug("["..target:getName().."]["..setting:getIndex().."] Range"..(index and "["..index.."]"
         or "").." Changed: "..tostring(range))
     end
   })
@@ -446,7 +446,7 @@ function TargetsModule.addToTargetList(target)
         removeTargetWindow=nil
       end
 
-      removeTargetWindow = displayGeneralBox(tr('Remove'), 
+      removeTargetWindow = displayGeneralBox(tr('Remove'),
         tr('Remove '..targetName..'?'), {
         { text=tr('Yes'), callback=yesCallback },
         { text=tr('No'), callback=noCallback },
@@ -458,7 +458,7 @@ end
 function TargetsModule.removeTarget(name)
   for _,child in pairs(UI.TargetList:getChildren()) do
     local t = child.target
-    if t and t:getName() == name then 
+    if t and t:getName() == name then
       UI.TargetList:removeChild(child)
     end
   end
@@ -646,7 +646,7 @@ function TargetsModule.addFile(file)
         removeFileWindow=nil
       end
 
-      removeFileWindow = displayGeneralBox(tr('Delete'), 
+      removeFileWindow = displayGeneralBox(tr('Delete'),
         tr('Delete '..fileName..'?'), {
         { text=tr('Yes'), callback=yesCallback },
         { text=tr('No'), callback=noCallback },
@@ -674,7 +674,7 @@ function TargetsModule.saveTargets(file)
 
     local yesCallback = function()
       writeTargets(config)
-      
+
       saveOverWindow:destroy()
       saveOverWindow=nil
 
@@ -717,7 +717,7 @@ function TargetsModule.loadTargets(file, force)
         if target then TargetsModule.addTarget(target) end
       end
       UI.TargetList:focusNextChild()
-      
+
       if not force then
         currentFileLoaded = file
         CandyBot.changeOption(UI.LoadList:getId(), file)

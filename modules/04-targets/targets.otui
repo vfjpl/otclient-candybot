@@ -383,7 +383,7 @@ Panel
       !text: tr('Name:')
       anchors.top: LoadSettingScrollBar.top
       anchors.left: LoadSettingScrollBar.right
-      width: 35 
+      width: 35
       margin-top: 2
       margin-left: 6
 
