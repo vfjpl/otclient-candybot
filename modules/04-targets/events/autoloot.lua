@@ -180,3 +180,7 @@ function AutoLoot.Event(event)
   -- Keep the event live
   return Helper.safeDelay(500, 800)
 end
+
+function AutoLoot.onChooseIgnoreItem(self, item)
+  return true
+end
