@@ -761,6 +761,7 @@ function writeTargets(config)
     targets[v:getName()] = v:toNode()
   end
   config:setNode('Targets', targets)
+  config:setNode('IgnoredItems', TargetsModule.AutoLoot.ignoredItems)
   config:save()
 
   BotLogger.debug("Saved "..tostring(#targetObjs) .." targets to "..config:getFileName())
@@ -778,6 +779,11 @@ function parseTargets(config)
     target:parseNode(v)
     targets[index] = target
     index = index + 1
+  end
+
+  local items = config:getNode("IgnoredItems")
+  if items then
+    TargetsModule.AutoLoot.ignoredItems = items
   end
 
   return targets

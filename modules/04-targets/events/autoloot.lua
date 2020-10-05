@@ -11,6 +11,7 @@ AutoLoot = TargetsModule.AutoLoot
 AutoLoot.lootList = {}
 AutoLoot.looting = false
 AutoLoot.lootProc = nil
+AutoLoot.ignoredItems = {}
 
 -- Methods
 
@@ -182,5 +183,9 @@ function AutoLoot.Event(event)
 end
 
 function AutoLoot.onChooseIgnoreItem(self, item)
+  if item then
+    AutoLoot.ignoredItems[item:getId()] = true
+  end
+  CandyBot.show()
   return true
 end

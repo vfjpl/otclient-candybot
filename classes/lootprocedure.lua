@@ -184,9 +184,11 @@ function LootProcedure:getBestItem()
   local data = {item=nil, z=nil}
   for k,i in pairs(self.items) do
     if not data.item or (i and i:getPosition().z < data.z) then
-      data.item = i
-      data.z = i:getPosition().z
-      BotLogger.debug("Found best item: ".. i:getId())
+      if not TargetsModule.AutoLoot.ignoredItems[i:getId()] then
+        data.item = i
+        data.z = i:getPosition().z
+        BotLogger.debug("Found best item: ".. i:getId())
+      end
     end
   end
   return data.item
