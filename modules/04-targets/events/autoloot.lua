@@ -32,7 +32,7 @@ function AutoLoot.onTargetDeath(creature)
   if AutoLoot.canLoot(creature) then
     local creatureId = creature:getId()
     local creaturePos = creature:getPosition()
-    
+
     AutoLoot.lootList[creatureId] = {
       id = creatureId,
       position = creaturePos,
@@ -100,9 +100,9 @@ function AutoLoot.lootNext()
   local data = AutoLoot.getClosestLoot()
 
   if data.loot and player:getFreeCapacity() > 0 then
-    AutoLoot.lootProc = LootProcedure.create(data.creatureId, 
+    AutoLoot.lootProc = LootProcedure.create(data.creatureId,
       data.loot.position, data.loot.corpse)
-    
+
     -- Loot procedure finished
     connect(AutoLoot.lootProc, { onFinished = function(id)
       AutoLoot.removeLoot(id)
