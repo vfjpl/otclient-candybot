@@ -167,13 +167,7 @@ function AutoLoot.onStopped()
 end
 
 function AutoLoot.Event(event)
-  -- Cannot continue if still attacking or looting
-  if g_game.isAttacking() or AutoLoot.isLooting() then
-    return Helper.safeDelay(500, 800)
-  end
-
-  -- Try loot if not attacking still
-  if not g_game.isAttacking() and AutoLoot.hasUncheckedLoot() then
+  if not AutoLoot.isLooting() and AutoLoot.hasUncheckedLoot() then
     AutoLoot.startLooting()
   end
 

@@ -90,7 +90,6 @@ function LootProcedure:start()
           self.attempting = true
 
           BotLogger.debug("LootProcedure: try open corpse")
-          g_game.cancelAttackAndFollow()
           g_game.open(self:findCorpse())
 
           scheduleEvent(function() self.attempting = false end, 3000)
