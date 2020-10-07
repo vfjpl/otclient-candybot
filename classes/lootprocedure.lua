@@ -29,7 +29,7 @@ LootProcedure.create = function(id, position, corpse, timeoutTicks)
   proc.container = nil
   proc.items = nil
   proc.moveProc = nil
-  
+
   return proc
 end
 
@@ -88,7 +88,7 @@ function LootProcedure:start()
       if Position.isInRange(self.position, player:getPosition(), 6, 6) then
         if not self.attempting then
           self.attempting = true
-          
+
           BotLogger.debug("LootProcedure: try open corpse")
           g_game.cancelAttackAndFollow()
           g_game.open(self:findCorpse())
