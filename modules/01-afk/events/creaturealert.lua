@@ -19,7 +19,7 @@ function CreatureAlert.Event(event)
   creatures = g_map.getSpectators(player:getPosition(), false)
 
   local alert = false
-  if AlertList.getBlackOrWhite() then 
+  if AlertList.getBlackOrWhite() then
     -- black
     for k, v in pairs (creatures) do
       if v ~= player and AlertList.isBlackListed(v:getName()) then
@@ -27,7 +27,7 @@ function CreatureAlert.Event(event)
         break
       end
     end
-  else 
+  else
     -- white
     for k, v in pairs (creatures) do
       if v ~= player and not AlertList.isWhiteListed(v:getName()) then
