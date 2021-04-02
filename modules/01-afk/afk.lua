@@ -19,7 +19,9 @@ function AfkModule.getPanel() return Panel end
 function AfkModule.setPanel(panel) Panel = panel end
 
 function AfkModule.init()
-  g_sounds.preload('alert.ogg')
+  if g_sounds then
+    g_sounds.preload('alert.ogg')
+  end
 
   dofile('alertlist.lua')
   AlertList.init()

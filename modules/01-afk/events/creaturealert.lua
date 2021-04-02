@@ -6,7 +6,10 @@
 AfkModule.CreatureAlert = {}
 CreatureAlert = AfkModule.CreatureAlert
 
-local alertSoundChannel = g_sounds.getChannel(1)
+local alertSoundChannel = nil
+if g_sounds then
+  alertSoundChannel = g_sounds.getChannel(1)
+end
 
 function CreatureAlert.Event(event)
   local blackList = AlertList.getBlackList()
@@ -51,5 +54,7 @@ function CreatureAlert.alert()
 end
 
 function CreatureAlert.stopAlert()
-  alertSoundChannel:stop()
+  if alertSoundChannel then
+    alertSoundChannel:stop()
+  end
 end
