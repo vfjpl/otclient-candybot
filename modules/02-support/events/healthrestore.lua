@@ -20,7 +20,7 @@ function AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, restoreTy
   if restoreType == RestoreType.cast then
     local spellText = Panel:getChildById('HealSpellText'):getText()
     local healthValue = Panel:getChildById('HealthBar'):getValue()
-    
+
     local delay = 0
     if player:getHealthPercent() < healthValue then
       g_game.talk(spellText)
@@ -34,7 +34,7 @@ function AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, restoreTy
       health, maxHealth = player:getHealth(), player:getMaxHealth()
       if player:getHealthPercent() < healthValue and tries > 0 then
         tries = tries - 1
-        AutoHeal.onHealthChange(player, health, maxHealth, health, restoreType, tries) 
+        AutoHeal.onHealthChange(player, health, maxHealth, health, restoreType, tries)
       else
         removeEvent(nextHeal[RestoreType.cast])
       end
@@ -61,7 +61,7 @@ function AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, restoreTy
       health, maxHealth = player:getHealth(), player:getMaxHealth()
       if player:getHealthPercent() < healthValue and tries > 0 then
         tries = tries - 1
-        AutoHeal.onHealthChange(player, health, maxHealth, health, restoreType, tries) 
+        AutoHeal.onHealthChange(player, health, maxHealth, health, restoreType, tries)
       else
         removeEvent(nextHeal[RestoreType.item])
       end
