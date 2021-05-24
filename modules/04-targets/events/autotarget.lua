@@ -116,14 +116,16 @@ end
 function AutoTarget.getBestTarget()
   local player = g_game.getLocalPlayer()
   local playerPos = player:getPosition()
-  local target, distance = nil, nil
+  local target, priority, distance = nil, nil, nil
 
   for id,t in pairs(AutoTarget.creatureData) do
     if t and AutoTarget.isValidTarget(t) then
+      local p = TargetsModule.getTarget(t:getName()):getPriority()
       local d = Position.distance(playerPos, t:getPosition())
-      if not target or d < distance then
+      if not target or p > priority or (p == priority and d < distance) then
         BotLogger.debug("AutoTarget: Found closest target")
         target = t
+        priority = p
         distance = d
       end
     end
