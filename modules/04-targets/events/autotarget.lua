@@ -136,10 +136,10 @@ function AutoTarget.onStopped()
 end
 
 function AutoTarget.Event(event)
-  -- TODO: There seems to be a rare bug when changing 
-  -- attacker too fast the client gets confused thinking 
+  -- TODO: There seems to be a rare bug when changing
+  -- attacker too fast the client gets confused thinking
   -- its attacking when on the server its not. To resolve
-  -- this we will need to find out what is causing it and 
+  -- this we will need to find out what is causing it and
   -- also add a fail safe timeout mechanism.
   -- See: https://github.com/BenDol/otclient-candybot/issues/20
 
