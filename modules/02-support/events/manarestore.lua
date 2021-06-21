@@ -38,7 +38,7 @@ function AutoMana.onManaChange(player, mana, maxMana, oldMana, restoreType, trie
       mana, maxMana = player:getMana(), player:getMaxMana()
       if player:getManaPercent() < manaValue and tries > 0 then
         tries = tries - 1
-        AutoMana.onManaChange(player, mana, maxMana, mana, restoreType, tries) 
+        AutoMana.onManaChange(player, mana, maxMana, mana, restoreType, tries)
       else
         removeEvent(nextMana)
       end
