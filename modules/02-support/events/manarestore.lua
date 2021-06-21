@@ -10,7 +10,7 @@ local settings = {
 }
 
 function AutoMana.onManaChange(player, restoreType, tries)
-  local tries = tries or 10
+  local tries = tries or 2
 
   local Panel = SupportModule.getPanel()
   if not Panel:getChildById(settings[restoreType]):isChecked() then
