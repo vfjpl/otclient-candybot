@@ -21,10 +21,9 @@ function AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, restoreTy
     local spellText = Panel:getChildById('HealSpellText'):getText()
     local healthValue = Panel:getChildById('HealthBar'):getValue()
 
-    local delay = 0
+    local delay = Helper.getSpellDelay(spellText)
     if player:getHealthPercent() < healthValue then
-      g_game.talk(spellText)
-      delay = Helper.getSpellDelay(spellText)
+      Helper.castSpell(player, spellText)
     end
 
     nextHeal[RestoreType.cast] = scheduleEvent(function()
