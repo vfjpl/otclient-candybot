@@ -9,7 +9,7 @@ local settings = {
   [RestoreType.item] = 'AutoManaItem'
 }
 
-function AutoMana.onManaChange(player, mana, maxMana, oldMana, restoreType, tries)
+function AutoMana.onManaChange(player, restoreType, tries)
   local tries = tries or 10
 
   local Panel = SupportModule.getPanel()
@@ -32,13 +32,9 @@ function AutoMana.onManaChange(player, mana, maxMana, oldMana, restoreType, trie
     end
 
     nextMana = scheduleEvent(function()
-      local player = g_game.getLocalPlayer()
-      if not player then return end
-
-      mana, maxMana = player:getMana(), player:getMaxMana()
       if player:getManaPercent() < manaValue and tries > 0 then
         tries = tries - 1
-        AutoMana.onManaChange(player, mana, maxMana, mana, restoreType, tries)
+        AutoMana.onManaChange(player, restoreType, tries)
       else
         removeEvent(nextMana)
       end
@@ -46,15 +42,13 @@ function AutoMana.onManaChange(player, mana, maxMana, oldMana, restoreType, trie
   end
 end
 
-function AutoMana.executeItem(player, mana, maxMana, oldMana)
-  AutoMana.onManaChange(player, mana, maxMana, oldMana, RestoreType.item)
+function AutoMana.executeItem(player, mana, maxMana, oldMana, oldMaxMana)
+  AutoMana.onManaChange(player, RestoreType.item)
 end
 
 function AutoMana.ConnectItemListener(listener)
   if g_game.isOnline() then
-    local player = g_game.getLocalPlayer()
-    addEvent(AutoMana.onManaChange(player, player:getMana(),
-      player:getMaxMana(), player:getMana(), RestoreType.item))
+    addEvent(AutoMana.onManaChange(g_game.getLocalPlayer(), RestoreType.item))
   end
 
   connect(LocalPlayer, { onManaChange = AutoMana.executeItem })

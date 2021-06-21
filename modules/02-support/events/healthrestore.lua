@@ -9,7 +9,7 @@ local settings = {
   [RestoreType.item] = 'AutoHealthItem'
 }
 
-function AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, restoreType, tries)
+function AutoHeal.onHealthChange(player, restoreType, tries)
   local tries = tries or 10
 
   local Panel = SupportModule.getPanel()
@@ -27,13 +27,9 @@ function AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, restoreTy
     end
 
     nextHeal[RestoreType.cast] = scheduleEvent(function()
-      local player = g_game.getLocalPlayer()
-      if not player then return end
-
-      health, maxHealth = player:getHealth(), player:getMaxHealth()
       if player:getHealthPercent() < healthValue and tries > 0 then
         tries = tries - 1
-        AutoHeal.onHealthChange(player, health, maxHealth, health, restoreType, tries)
+        AutoHeal.onHealthChange(player, restoreType, tries)
       else
         removeEvent(nextHeal[RestoreType.cast])
       end
@@ -55,12 +51,9 @@ function AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, restoreTy
     end
 
     nextHeal[RestoreType.item] = scheduleEvent(function()
-      local player = g_game.getLocalPlayer()
-      if not player then return end
-      health, maxHealth = player:getHealth(), player:getMaxHealth()
       if player:getHealthPercent() < healthValue and tries > 0 then
         tries = tries - 1
-        AutoHeal.onHealthChange(player, health, maxHealth, health, restoreType, tries)
+        AutoHeal.onHealthChange(player, restoreType, tries)
       else
         removeEvent(nextHeal[RestoreType.item])
       end
@@ -68,15 +61,13 @@ function AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, restoreTy
   end
 end
 
-function AutoHeal.executeCast(player, health, maxHealth, oldHealth)
-  AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, RestoreType.cast)
+function AutoHeal.executeCast(player, health, maxHealth, oldHealth, oldMaxHealth)
+  AutoHeal.onHealthChange(player, RestoreType.cast)
 end
 
 function AutoHeal.ConnectCastListener(listener)
   if g_game.isOnline() then
-    local player = g_game.getLocalPlayer()
-    addEvent(AutoHeal.onHealthChange(player, player:getHealth(),
-      player:getMaxHealth(), player:getHealth(), RestoreType.cast))
+    addEvent(AutoHeal.onHealthChange(g_game.getLocalPlayer(), RestoreType.cast))
   end
 
   connect(LocalPlayer, { onHealthChange = AutoHeal.executeCast })
@@ -86,15 +77,13 @@ function AutoHeal.DisconnectCastListener(listener)
   disconnect(LocalPlayer, { onHealthChange = AutoHeal.executeCast })
 end
 
-function AutoHeal.executeItem(player, health, maxHealth, oldHealth)
-  AutoHeal.onHealthChange(player, health, maxHealth, oldHealth, RestoreType.item)
+function AutoHeal.executeItem(player, health, maxHealth, oldHealth, oldMaxHealth)
+  AutoHeal.onHealthChange(player, RestoreType.item)
 end
 
 function AutoHeal.ConnectItemListener(listener)
   if g_game.isOnline() then
-    local player = g_game.getLocalPlayer()
-    addEvent(AutoHeal.onHealthChange(player, player:getHealth(),
-      player:getMaxHealth(), player:getHealth(), RestoreType.item))
+    addEvent(AutoHeal.onHealthChange(g_game.getLocalPlayer(), RestoreType.item))
   end
 
   connect(LocalPlayer, { onHealthChange = AutoHeal.executeItem })
