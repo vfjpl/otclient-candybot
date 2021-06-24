@@ -142,10 +142,11 @@ function LootProcedure:loot(container, prevContainer)
   local containerItem = container:getContainerItem()
   local corpseItem = self:findCorpse()
 
-  -- ensure its the right container
+  --[[ ensure its the right container
   if not corpseItem or containerItem:getId() ~= corpseItem:getId() then
     return false
   end
+  --]]
 
   -- bind container and items
   self.container = container
