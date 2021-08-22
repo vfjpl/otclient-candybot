@@ -69,9 +69,10 @@ function LootProcedure:start()
       BotLogger.debug("LootProcedure: self.hook called")
       self:stopOpenCheck()
 
-      -- Try eat from open corpse first
+      --[[ Try eat from open corpse first
       BotLogger.debug("LootProcedure: try eat")
       addEvent(AutoEat.Event)
+      --]]
 
       if self:loot(container, prevContainer) then
         signalcall(self.onContainerOpened, container)
