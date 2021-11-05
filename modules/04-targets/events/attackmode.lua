@@ -11,15 +11,15 @@ AttackMode = TargetsModule.AttackMode
 -- Methods
 
 function AttackMode.init()
-  
+
 end
 
 function AttackMode.terminate()
-  
+
 end
 
 function AttackMode.onStopped()
-  
+
 end
 
 function AttackMode.Event(event)
