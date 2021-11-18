@@ -26,7 +26,7 @@ SmartPath.checkTicks = 2000 -- millis
 SmartPath.idleTime = 15 -- seconds
 
 function SmartPath.init()
-  
+
 end
 
 function SmartPath.terminate()
@@ -34,7 +34,7 @@ function SmartPath.terminate()
 end
 
 function SmartPath.onStopped()
-  
+
 end
 
 function SmartPath.checkPathing(dirs, override, dontChange)
@@ -118,7 +118,7 @@ function SmartPath.changeDirection(lastWalkResult, tries)
   for i = 0,stackSize do
     table.insert(cachedDirs, SmartPath.dirStack[#SmartPath.dirStack-i])
   end
-  
+
   BotLogger.debug("SmartPath: "..table.tostring(cachedDirs))
 
   -- Cannot change if the same or if the dir was used recently
