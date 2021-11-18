@@ -151,13 +151,15 @@ function SmartPath.getBestWalkableTile(player, direction, override)
     -- Get the furthest away tile
     if not tile or Position.greaterThan(tilePos, pos) then
       if override or (getDirectionFromPos(pos, tilePos) == direction and t:isWalkable() and not t:isHouseTile()) then
-        if t:isHouseTile() then
-          houseTileCount = houseTileCount + 1
-        end
-        tileCount = tileCount + 1
+        if not Position.equals(tilePos, pos) then
+          if t:isHouseTile() then
+            houseTileCount = houseTileCount + 1
+          end
+          tileCount = tileCount + 1
 
-        -- Choose this tile
-        tile = t
+          -- Choose this tile
+          tile = t
+        end
       end
     end
   end
