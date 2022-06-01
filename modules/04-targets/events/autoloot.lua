@@ -91,7 +91,7 @@ end
 function AutoLoot.startLooting()
   BotLogger.debug("AutoLoot.startLooting() called")
   AutoLoot.looting = true
-
+  g_game.setChaseMode(DontChase)
   AutoLoot.lootNext()
 end
 
@@ -150,6 +150,7 @@ function AutoLoot.stopLooting()
     AutoLoot.lootProc:cancel()
   end
 
+  AutoTarget.checkChaseMode(g_game.getAttackingCreature())
   -- Clean up loot data
   AutoLoot.lootList = {}
 end
