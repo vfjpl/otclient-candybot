@@ -29,7 +29,7 @@ function AutoLoot.onStopped()
 end
 
 function AutoLoot.onTargetDeath(creature)
-  if AutoLoot.canLoot(creature) then
+  if TargetsModule.getUI().AutoTarget:isChecked() and AutoLoot.canLoot(creature) then
     local creatureId = creature:getId()
     local creaturePos = creature:getPosition()
 
