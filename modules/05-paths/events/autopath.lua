@@ -67,16 +67,16 @@ function AutoPath.onAutoWalkAction(player, position, floorChange)
   local topUseThing = tile:getTopUseThing()
 
   if Bit.hasBit(floorChange, FloorChange.Up) then
-    if topUseThing:isGround() then 
+    if topUseThing:isGround() then
       -- use rope on rope spot
-      Helper.safeUseInventoryItemWith(AutoPath.ropeId, topUseThing, false) 
+      Helper.safeUseInventoryItemWith(AutoPath.ropeId, topUseThing, false)
     else
       -- use ladder
       g_game.use(topUseThing)
     end
   else
     -- use shovel on stone pile
-    Helper.safeUseInventoryItemWith(AutoPath.shovelId, topUseThing, false) 
+    Helper.safeUseInventoryItemWith(AutoPath.shovelId, topUseThing, false)
 
   end
   g_game.stop()
@@ -116,11 +116,12 @@ end
 
 function AutoPath.onNodeFailed(player, code)
   local node = AutoPath.getNode()
+  if not node then return end
   if node:execute(ScriptEnv) == Node.OK then
     if node:getType() == Node.WALK then
       BotLogger.error("AutoPath: autoWalk to node " .. node:getName() .. " failed (" .. tostring(code) .. ") ")
     end
-    AutoPath.goToNextNode()
+    currentNode = currentNode + 1
   end
 end
 
@@ -130,21 +131,21 @@ end
 
 function AutoPath.ConnectListener(listener)
   connect(LocalPlayer, {
-    onAutoWalkAction = AutoPath.onAutoWalkAction, 
+    onAutoWalkAction = AutoPath.onAutoWalkAction,
     onPositionChange = AutoPath.onPositionChange
   })
 end
 
 function AutoPath.DisconnectListener(listener)
   disconnect(LocalPlayer, {
-    onAutoWalkAction = AutoPath.onAutoWalkAction, 
+    onAutoWalkAction = AutoPath.onAutoWalkAction,
     onPositionChange = AutoPath.onPositionChange
   })
 end
 
-function AutoPath.onPositionChange(creature,newPos, oldPos) 
+function AutoPath.onPositionChange(creature,newPos, oldPos)
   local node = AutoPath.getNode()
-if not node then return end
+  if not node then return end
   if (Position.equals(oldPos, node:getPosition()) and (node:getType() == Node.LADDER or node:getType() == Node.ROPE)) or
     (Position.equals(newPos, node:getPosition()) and node:execute(ScriptEnv) == Node.OK) then
     g_game.stop()
@@ -159,7 +160,7 @@ end
 
 function AutoPath.walkToNode(ignoreWalking)
   local player = g_game.getLocalPlayer()
-  if not player then 
+  if not player then
     BotLogger.error("AutoPath: Logged out?")
     return Helper.safeDelay(5000,10000)
   end
@@ -193,7 +194,7 @@ function AutoPath.walkToNode(ignoreWalking)
   end
 
   if not node:hasPosition() then
-    local ret = node:execute(ScriptEnv) 
+    local ret = node:execute(ScriptEnv)
     if ret == Node.STOP then
       return
     end
@@ -206,7 +207,7 @@ function AutoPath.walkToNode(ignoreWalking)
     if tile then
       local forceWalk = not tile:getTopCreature() and not tile:isPathable() and tile:getTopLookThing() == tile:getGround()
       if not forceWalk or Position.equals(playerPos, node:getPosition()) then
-        local ret = node:execute(ScriptEnv) 
+        local ret = node:execute(ScriptEnv)
         if ret == Node.STOP then
           return
         end
@@ -223,9 +224,7 @@ function AutoPath.walkToNode(ignoreWalking)
   -- })
 
   nextForceWalk = false
-  local ret = player:autoWalk(node:getPosition(), 0) or
-    player:autoWalk(node:getPosition(), PathFindFlags.MultiFloor)
-    or player:autoWalk(node:getPosition(), PathFindFlags.AllowNonPathable + PathFindFlags.MultiFloor)
+  local ret = player:autoWalk(node:getPosition())
 
   if not ret then
     AutoPath.onNodeFailed(player, -1)
